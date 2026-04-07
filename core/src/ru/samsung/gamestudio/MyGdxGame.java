@@ -35,7 +35,6 @@ public class MyGdxGame extends Game {
 		camera.setToOrtho(false, GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
 
 		gameScreen = new GameScreen(this);
-
 		setScreen(gameScreen);
 	}
 

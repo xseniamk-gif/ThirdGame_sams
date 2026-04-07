@@ -21,6 +21,7 @@ public class ShipObject extends GameObject {
         );
     }
 
+
     private void putInFrame() {
         if (getY() > (GameSettings.SCREEN_HEIGHT / 2f - height / 2f)) {
             setY((int) (GameSettings.SCREEN_HEIGHT / 2f - height / 2f));

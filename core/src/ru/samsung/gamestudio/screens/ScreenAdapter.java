@@ -3,11 +3,11 @@ import com.badlogic.gdx.Screen;
 
 import ru.samsung.gamestudio.MyGdxGame;
 
-public class GameScreen implements Screen {
+public class ScreenAdapter implements Screen {
 
     MyGdxGame myGdxGame;
 
-    public GameScreen(MyGdxGame myGdxGame) {
+    public ScreenAdapter(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
     }
 
