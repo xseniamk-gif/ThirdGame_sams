@@ -5,6 +5,10 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import ru.samsung.gamestudio.Components.ImageView;
+import ru.samsung.gamestudio.Components.MovingBackgroundView;
+import ru.samsung.gamestudio.ContactManager;
 import ru.samsung.gamestudio.GameResources;
 import ru.samsung.gamestudio.GameSession;
 import ru.samsung.gamestudio.GameSettings;
@@ -18,8 +22,11 @@ import java.util.ArrayList;
 public class GameScreen extends ScreenAdapter {
 
     MyGdxGame myGdxGame;
+    ImageView topBlackoutView;
     GameSession gameSession;
     ShipObject shipObject;
+    ContactManager contactManager;
+    MovingBackgroundView backgroundView;
 
     ArrayList<TrashObject> trashArray;
     ArrayList<BulletObject> bulletArray;
@@ -31,12 +38,13 @@ public class GameScreen extends ScreenAdapter {
         trashArray = new ArrayList<>();
         bulletArray = new ArrayList<>();
 
-        shipObject = new ShipObject(
-                GameSettings.SCREEN_WIDTH / 2, 150,
-                GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
-                GameResources.SHIP_IMG_PATH,
-                myGdxGame.world
+        shipObject = new ShipObject(GameSettings.SCREEN_WIDTH / 2, 150, GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT, GameResources.SHIP_IMG_PATH, myGdxGame.world
+
+
+                topBlackoutView = new ImageView(0, 1180, GameResources.BLACKOUT_TOP_IMG_PATH);
         );
+        contactManager = new ContactManager(myGdxGame.world);
+        backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
     }
 
     @Override
@@ -51,22 +59,16 @@ public class GameScreen extends ScreenAdapter {
         handleInput();
 
         if (gameSession.shouldSpawnTrash()) {
-            TrashObject trashObject = new TrashObject(
-                    GameSettings.TRASH_WIDTH, GameSettings.TRASH_HEIGHT,
-                    GameResources.TRASH_IMG_PATH,
-                    myGdxGame.world
-            );
+            TrashObject trashObject = new TrashObject(GameSettings.TRASH_WIDTH, GameSettings.TRASH_HEIGHT, GameResources.TRASH_IMG_PATH, myGdxGame.world);
             trashArray.add(trashObject);
         }
 
         if (shipObject.needToShoot()) {
-            BulletObject laserBullet = new BulletObject(
-                    shipObject.getX(), shipObject.getY() + shipObject.height / 2,
-                    GameSettings.BULLET_WIDTH, GameSettings.BULLET_HEIGHT,
-                    GameResources.BULLET_IMG_PATH,
-                    myGdxGame.world
-            );
+            BulletObject laserBullet = new BulletObject(shipObject.getX(), shipObject.getY() + shipObject.height / 2, GameSettings.BULLET_WIDTH, GameSettings.BULLET_HEIGHT, GameResources.BULLET_IMG_PATH, myGdxGame.world);
             bulletArray.add(laserBullet);
+        }
+        if (!shipObject.isAlive()) {
+            System.out.println("Game over!");
         }
 
         updateTrash();
@@ -86,11 +88,15 @@ public class GameScreen extends ScreenAdapter {
 
         myGdxGame.camera.update();
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+
         ScreenUtils.clear(Color.CLEAR);
 
         myGdxGame.batch.begin();
+        backgroundView.draw(myGdxGame.batch);
+        backgroundView.move();
         for (TrashObject trash : trashArray) trash.draw(myGdxGame.batch);
         shipObject.draw(myGdxGame.batch);
+        topBlackoutView.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         myGdxGame.batch.end();
     }

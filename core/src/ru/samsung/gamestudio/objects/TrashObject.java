@@ -7,6 +7,7 @@ import ru.samsung.gamestudio.GameSettings;
 import java.util.Random;
 
 public class TrashObject extends GameObject {
+    int leavlate = 3;
 
     private static final int paddingHorizontal = 30;
 
@@ -19,12 +20,19 @@ public class TrashObject extends GameObject {
                 GameSettings.TRASH_BIT,
                 world
         );
-
+        leavlate = 3;
         body.setLinearVelocity(new Vector2(0, -GameSettings.TRASH_VELOCITY));
     }
 
     public boolean isInFrame() {
         return getY() + height / 2 > 0;
     }
+    public void hit() {
+        leavlate -= 1;
+    }
+    public boolean isAlive() {
+        return leavlate > 0;
+    }
+
 
 }

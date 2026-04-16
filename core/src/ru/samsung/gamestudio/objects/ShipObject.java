@@ -10,10 +10,12 @@ import ru.samsung.gamestudio.GameSettings;
 public class ShipObject extends GameObject {
 
     long lastShotTime;
+    int leavlate = 3;
 
     public ShipObject(int x, int y, int width, int height, String texturePath, World world) {
         super(texturePath, x, y, width, height, GameSettings.SHIP_BIT, world);
         body.setLinearDamping(10);
+        leavlate = 3;
     }
 
     @Override
@@ -51,6 +53,12 @@ public class ShipObject extends GameObject {
             return true;
         }
         return false;
+    }
+    public void hit() {
+        leavlate = 1;
+    }
+    public boolean isAlive() {
+        return leavlate > 0;
     }
 
 }

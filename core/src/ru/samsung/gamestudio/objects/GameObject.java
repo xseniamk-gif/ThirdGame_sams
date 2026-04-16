@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import static ru.samsung.gamestudio.GameSettings.SCALE;
+
+import javax.imageio.metadata.IIOMetadataNode;
 
 public class GameObject {
 
@@ -25,6 +28,8 @@ public class GameObject {
         this.height = height;
         this.cBits = cBits;
 
+
+
         texture = new Texture(texturePath);
         body = createBody(x, y, world);
     }
@@ -37,9 +42,7 @@ public class GameObject {
                 height);
     }
 
-    public void hit() {
-        // all physics objects could be hit
-    }
+
 
     public int getX() {
         return (int) (body.getPosition().x / SCALE);
@@ -58,7 +61,7 @@ public class GameObject {
     }
 
     private Body createBody(float x, float y, World world) {
-        fixture.setUserData(this);
+
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.fixedRotation = true;
@@ -72,11 +75,15 @@ public class GameObject {
         fixtureDef.density = 0.1f;
         fixtureDef.friction = 1f;
 
-        body.createFixture(fixtureDef);
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(this);
         circleShape.dispose();
 
         body.setTransform(x * SCALE, y * SCALE, 0);
         return body;
     }
 
+
+    public void hit() {
+    }
 }
