@@ -7,9 +7,10 @@ import ru.samsung.gamestudio.GameSettings;
 import java.util.Random;
 
 public class TrashObject extends GameObject {
-    int leavlate = 3;
 
     private static final int paddingHorizontal = 30;
+
+    private int livesLeft;
 
     public TrashObject(int width, int height, String texturePath, World world) {
         super(
@@ -20,19 +21,21 @@ public class TrashObject extends GameObject {
                 GameSettings.TRASH_BIT,
                 world
         );
-        leavlate = 3;
+
         body.setLinearVelocity(new Vector2(0, -GameSettings.TRASH_VELOCITY));
+        livesLeft = 1;
+    }
+
+    public boolean isAlive() {
+        return livesLeft > 0;
     }
 
     public boolean isInFrame() {
         return getY() + height / 2 > 0;
     }
+
+    @Override
     public void hit() {
-        leavlate -= 1;
+        livesLeft -= 1;
     }
-    public boolean isAlive() {
-        return leavlate > 0;
-    }
-
-
 }

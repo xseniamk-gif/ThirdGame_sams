@@ -11,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import static ru.samsung.gamestudio.GameSettings.SCALE;
 
-import javax.imageio.metadata.IIOMetadataNode;
-
 public class GameObject {
 
     public short cBits;
@@ -28,8 +26,6 @@ public class GameObject {
         this.height = height;
         this.cBits = cBits;
 
-
-
         texture = new Texture(texturePath);
         body = createBody(x, y, world);
     }
@@ -37,12 +33,14 @@ public class GameObject {
     public void draw(SpriteBatch batch) {
         batch.draw(texture,
                 getX() - (width / 2f),
-                getY()- (height / 2f),
+                getY() - (height / 2f),
                 width,
                 height);
     }
 
-
+    public void hit() {
+        // all physics objects could be hit
+    }
 
     public int getX() {
         return (int) (body.getPosition().x / SCALE);
@@ -61,7 +59,6 @@ public class GameObject {
     }
 
     private Body createBody(float x, float y, World world) {
-
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.fixedRotation = true;
@@ -74,6 +71,7 @@ public class GameObject {
         fixtureDef.shape = circleShape;
         fixtureDef.density = 0.1f;
         fixtureDef.friction = 1f;
+        fixtureDef.filter.categoryBits = cBits;
 
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this);
@@ -83,7 +81,4 @@ public class GameObject {
         return body;
     }
 
-
-    public void hit() {
-    }
 }

@@ -19,6 +19,7 @@ public class ContactManager {
 
                 int cDef = fixA.getFilterData().categoryBits;
                 int cDef2 = fixB.getFilterData().categoryBits;
+
                 if (cDef == GameSettings.TRASH_BIT && cDef2 == GameSettings.BULLET_BIT
                         || cDef2 == GameSettings.TRASH_BIT && cDef == GameSettings.BULLET_BIT
                         || cDef == GameSettings.TRASH_BIT && cDef2 == GameSettings.SHIP_BIT

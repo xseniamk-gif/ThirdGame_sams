@@ -2,7 +2,9 @@ package ru.samsung.gamestudio;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -14,42 +16,51 @@ import static ru.samsung.gamestudio.GameSettings.*;
 
 public class MyGdxGame extends Game {
 
-	public World world;
+    public World world;
 
-	public Vector3 touch;
-	public SpriteBatch batch;
-	public OrthographicCamera camera;
+    public BitmapFont largeWhiteFont;
+    public BitmapFont commonWhiteFont;
+    public BitmapFont commonBlackFont;
 
-	public GameScreen gameScreen;
+    public Vector3 touch;
+    public SpriteBatch batch;
+    public OrthographicCamera camera;
 
-	float accumulator = 0;
+    public GameScreen gameScreen;
 
-	@Override
-	public void create() {
+    float accumulator = 0;
 
-		Box2D.init();
-		world = new World(new Vector2(0, 0), true);
+    @Override
+    public void create() {
 
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
+        Box2D.init();
+        world = new World(new Vector2(0, 0), true);
 
-		gameScreen = new GameScreen(this);
-		setScreen(gameScreen);
-	}
+        largeWhiteFont = FontBuilder.generate(48, Color.WHITE, GameResources.FONT_PATH);
+        commonWhiteFont = FontBuilder.generate(24, Color.WHITE, GameResources.FONT_PATH);
+        commonBlackFont = FontBuilder.generate(24, Color.BLACK, GameResources.FONT_PATH);
 
-	@Override
-	public void dispose() {
-		batch.dispose();
-	}
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
 
-	public void stepWorld() {
-		float delta = Gdx.graphics.getDeltaTime();
-		accumulator += Math.min(delta, 0.25f);
+        gameScreen = new GameScreen(this);
 
-		if (accumulator >= STEP_TIME) {
-			accumulator -= STEP_TIME;
-			world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-		}
-	}
+        setScreen(gameScreen);
+    }
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+    }
+
+    public void stepWorld() {
+        float delta = Gdx.graphics.getDeltaTime();
+        accumulator += Math.min(delta, 0.25f);
+
+        if (accumulator >= STEP_TIME) {
+            accumulator -= STEP_TIME;
+            world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+        }
+    }
 }

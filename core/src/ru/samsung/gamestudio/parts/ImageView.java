@@ -1,7 +1,9 @@
-package ru.samsung.gamestudio.Components;
+package ru.samsung.gamestudio.parts;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import ru.samsung.gamestudio.parts.View;
 
 public class ImageView extends View {
     Texture texture;

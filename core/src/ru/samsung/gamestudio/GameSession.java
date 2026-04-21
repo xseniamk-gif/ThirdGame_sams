@@ -7,6 +7,9 @@ public class GameSession {
     long nextTrashSpawnTime;
     long sessionStartTime;
 
+    public GameSession() {
+    }
+
     public void startGame() {
         sessionStartTime = TimeUtils.millis();
         nextTrashSpawnTime = sessionStartTime + (long) (GameSettings.STARTING_TRASH_APPEARANCE_COOL_DOWN
@@ -23,6 +26,6 @@ public class GameSession {
     }
 
     private float getTrashPeriodCoolDown() {
-        return (float) Math.exp(-0.001 * (TimeUtils.millis() - sessionStartTime) / 1000);
+        return (float) Math.exp(-0.001 * (TimeUtils.millis() - sessionStartTime + 1) / 1000);
     }
 }
