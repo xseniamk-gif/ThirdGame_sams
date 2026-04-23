@@ -6,6 +6,8 @@ public class GameSession {
 
     long nextTrashSpawnTime;
     long sessionStartTime;
+    long pauseStartTime;
+    public GameState state;
 
     public GameSession() {
     }
@@ -14,6 +16,18 @@ public class GameSession {
         sessionStartTime = TimeUtils.millis();
         nextTrashSpawnTime = sessionStartTime + (long) (GameSettings.STARTING_TRASH_APPEARANCE_COOL_DOWN
                 * getTrashPeriodCoolDown());
+        state = GameState.PLAYING;
+
+    }
+    public void pauseGame() {
+        state = GameState.PAUSED;
+        pauseStartTime = TimeUtils.millis();
+    }
+
+    public void resumeGame() {
+        state = GameState.PLAYING;
+
+        sessionStartTime += TimeUtils.millis() - pauseStartTime;
     }
 
     public boolean shouldSpawnTrash() {
