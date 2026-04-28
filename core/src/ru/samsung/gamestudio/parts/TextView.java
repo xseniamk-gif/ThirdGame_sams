@@ -4,12 +4,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import ru.samsung.gamestudio.parts.View;
+public class TextView extends View{
 
-public class TextView extends View {
-
-    private BitmapFont font;
-    private String text;
+    protected BitmapFont font;
+    protected String text;
 
     public TextView(BitmapFont font, float x, float y) {
         super(x, y);

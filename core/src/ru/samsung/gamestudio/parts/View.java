@@ -5,10 +5,11 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class View implements Disposable {
 
-    protected float x;
-    protected float y;
-    protected float width;
-    protected float height;
+    float x;
+    float y;
+
+    float width;
+    float height;
 
     public View(float x, float y, float width, float height) {
         this.x = x;

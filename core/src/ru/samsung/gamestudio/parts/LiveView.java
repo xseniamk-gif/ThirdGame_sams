@@ -2,9 +2,7 @@ package ru.samsung.gamestudio.parts;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import ru.samsung.gamestudio.GameResources;
-import ru.samsung.gamestudio.parts.View;
 
 public class LiveView extends View {
 
@@ -37,6 +35,5 @@ public class LiveView extends View {
     public void dispose() {
         texture.dispose();
     }
-
 
 }

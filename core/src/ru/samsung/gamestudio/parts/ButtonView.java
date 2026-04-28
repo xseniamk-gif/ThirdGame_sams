@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import ru.samsung.gamestudio.parts.View;
-
 public class ButtonView extends View {
 
     Texture texture;
