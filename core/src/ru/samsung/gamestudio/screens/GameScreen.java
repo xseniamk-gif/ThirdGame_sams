@@ -3,6 +3,7 @@ package ru.samsung.gamestudio.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import ru.samsung.gamestudio.*;
@@ -14,6 +15,7 @@ import ru.samsung.gamestudio.objects.ShipObject;
 import ru.samsung.gamestudio.objects.TrashObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -43,6 +45,7 @@ public class GameScreen extends ScreenAdapter {
     TextView recordsTextView;
     RecordsListView recordsListView;
     ButtonView homeButton2;
+    Random r = new Random();
 
     public GameScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
@@ -110,10 +113,14 @@ public class GameScreen extends ScreenAdapter {
         handleInput();
 
         if (gameSession.state == GameState.PLAYING) {
+
             if (gameSession.shouldSpawnTrash()) {
+
+                int number = r.nextInt(1, 4);
+                String s = String.valueOf(number);
                 TrashObject trashObject = new TrashObject(
                         GameSettings.TRASH_WIDTH, GameSettings.TRASH_HEIGHT,
-                        GameResources.TRASH_IMG_PATH,
+                        GameResources.TRASH_IMG_PATH + s,
                         myGdxGame.world
                 );
                 trashArray.add(trashObject);

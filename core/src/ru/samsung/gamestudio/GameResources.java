@@ -1,5 +1,7 @@
 package ru.samsung.gamestudio;
 
+import com.badlogic.gdx.graphics.Texture;
+
 public class GameResources {
 
     // Images for textures
@@ -16,9 +18,17 @@ public class GameResources {
     public static final String PAUSE_IMG_PATH = "textures/pause_icon.png";
     public static final String LIVE_IMG_PATH = "textures/life.png";
 
+    public static final String TRASH_IMG_PATH1 = "textures/trash2.png";
+    public static final String TRASH_IMG_PATH2 = "textures/trash1.png";
+    public static final String TRASH_IMG_PATH3 = "textures/trash3.png";
+
+    public static final String SHIP_IMG_PATH1 = "textures/ship1.png";
+    public static final String SHIP_IMG_PATH2 = "textures/ship2.png";
+    public static final String SHIP_IMG_PATH3 = "textures/ship3.png";
+    public static final String SHIP_IMG_PATH4 = "textures/ship4.png";
+
     public static final String BULLET_IMG_PATH = "textures/bullet.png";
     public static final String SHIP_IMG_PATH = "textures/ship1.png";
-    public static final String TRASH_IMG_PATH = "textures/trash1.png";
 
     // Sounds and music for audio
 

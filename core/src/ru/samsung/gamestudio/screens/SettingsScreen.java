@@ -26,9 +26,12 @@ public class SettingsScreen extends ScreenAdapter {
     TextView titleTextView;
     ImageView blackoutImageView;
     ButtonView returnButton;
+    ButtonView shipScinButton;
+    ScinScreen scinScreen;
     TextView musicSettingView;
     TextView soundSettingView;
     TextView clearSettingView;
+
 
     public SettingsScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
@@ -57,6 +60,12 @@ public class SettingsScreen extends ScreenAdapter {
                 GameResources.BUTTON_SHORT_BG_IMG_PATH,
                 "return"
         );
+        shipScinButton = new ButtonView(
+                280, 347,
+                160, 70,
+                myGdxGame.commonBlackFont,
+                GameResources.BUTTON_SHORT_BG_IMG_PATH,
+                "ship skin");
 
     }
 
@@ -75,6 +84,7 @@ public class SettingsScreen extends ScreenAdapter {
         titleTextView.draw(myGdxGame.batch);
         blackoutImageView.draw(myGdxGame.batch);
         returnButton.draw(myGdxGame.batch);
+        shipScinButton.draw(myGdxGame.batch);
         musicSettingView.draw(myGdxGame.batch);
         soundSettingView.draw(myGdxGame.batch);
         clearSettingView.draw(myGdxGame.batch);
@@ -88,6 +98,9 @@ public class SettingsScreen extends ScreenAdapter {
 
             if (returnButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.setScreen(myGdxGame.menuScreen);
+            }
+            if (shipScinButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
+                myGdxGame.setScreen(myGdxGame.scinScreen);
             }
             if (clearSettingView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 MemoryManager.saveTableOfRecords(new ArrayList<>());

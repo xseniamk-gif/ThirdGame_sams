@@ -1,5 +1,6 @@
 package ru.samsung.gamestudio.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.samsung.gamestudio.GameSettings;
@@ -24,6 +25,8 @@ public class TrashObject extends GameObject {
 
         body.setLinearVelocity(new Vector2(0, -GameSettings.TRASH_VELOCITY));
         livesLeft = 1;
+
+
     }
 
     public boolean isAlive() {
