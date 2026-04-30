@@ -18,9 +18,7 @@ public class MemoryManager {
     public static boolean loadIsSoundOn() {
         return preferences.getBoolean("isSoundOn", true);
     }
-    public static boolean loadIsSoundOff() {
-        return preferences.getBoolean("isSoundOn", false);
-    }
+
     public static void saveMusicSettings(boolean isOn) {
         preferences.putBoolean("isMusicOn", isOn);
         preferences.flush();
@@ -28,9 +26,6 @@ public class MemoryManager {
 
     public static boolean loadIsMusicOn() {
         return preferences.getBoolean("isMusicOn", true);
-    }
-    public static boolean loadIsMusicOff() {
-        return preferences.getBoolean("isMusicOn", false);
     }
 
     public static void saveTableOfRecords(ArrayList<Integer> table) {
