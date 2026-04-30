@@ -18,11 +18,11 @@ public class ScinScreen extends ScreenAdapter {
     MyGdxGame myGdxGame;
 
     MovingBackgroundView background;
-    ButtonView buttonRed;
-    ButtonView buttonGreen;
-    ButtonView buttonYellow;
-    ButtonView buttonMenu;
-    ButtonView buttonBlue;
+    ButtonView sh1;
+    ButtonView sh2;
+    ButtonView sh3;
+    ButtonView buttonSettings;
+    ButtonView sh4, bu;
     ImageView ship1, ship2, ship3, ship4;
 
     int gamePoints;
@@ -31,11 +31,11 @@ public class ScinScreen extends ScreenAdapter {
     public ScinScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
 
-        buttonRed = new ButtonView(50, 200, 100, 40);
-        buttonGreen = new ButtonView(500, 200, 100, 40);
-        buttonYellow = new ButtonView(50, 400, 100, 40);
-        buttonBlue = new ButtonView(500, 400, 100, 40);
-        buttonMenu = new ButtonView(860, 300, 100, 40);
+        sh1 = new ButtonView(50, 200, 100, 40);
+        sh2 = new ButtonView(500, 200, 100, 40);
+        sh3 = new ButtonView(50, 400, 100, 40);
+        sh4 = new ButtonView(500, 400, 100, 40);
+        buttonSettings = new ButtonView(860, 300, 100, 40);
         background = new ButtonView("textures/background_top.png");
         ship1 = new ImageView(30, 30, GameResources.SHIP_IMG_PATH1);
         ship2 = new ImageView(30, 40, GameResources.SHIP_IMG_PATH2);
@@ -58,13 +58,13 @@ public class ScinScreen extends ScreenAdapter {
                     new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)
             );
 
-            if (buttonRed.isHit((int) touch.x, (int) touch.y)) {
+            if (sh1.isHit((int) touch.x, (int) touch.y)) {
                 color = "red";
             }
-            if (buttonGreen.isHit((int) touch.x, (int) touch.y)) {
+            if (sh2.isHit((int) touch.x, (int) touch.y)) {
                 color = "green";
             }
-            if (buttonYellow.isHit((int) touch.x, (int) touch.y)) {
+            if (sh3.isHit((int) touch.x, (int) touch.y)) {
                 color = "yellow";
             }
             if (buttonBlue.isHit((int) touch.x, (int) touch.y)) {

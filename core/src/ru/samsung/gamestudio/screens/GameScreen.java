@@ -70,7 +70,9 @@ public class GameScreen extends ScreenAdapter {
         pauseButton = new ButtonView(
                 605, 1200,
                 46, 54,
-                GameResources.PAUSE_IMG_PATH
+                myGdxGame.commonWhiteFont,
+                GameResources.PAUSE_IMG_PATH,
+                "pause"
         );
 
         fullBlackoutView = new ImageView(0, 0, GameResources.BLACKOUT_FULL_IMG_PATH);
@@ -117,10 +119,10 @@ public class GameScreen extends ScreenAdapter {
             if (gameSession.shouldSpawnTrash()) {
 
                 int number = r.nextInt(1, 4);
-                String s = String.valueOf(number);
+                String s = GameResources.TRASH_IMG_PATH + String.valueOf(number);
                 TrashObject trashObject = new TrashObject(
                         GameSettings.TRASH_WIDTH, GameSettings.TRASH_HEIGHT,
-                        GameResources.TRASH_IMG_PATH + s,
+                        s,
                         myGdxGame.world
                 );
                 trashArray.add(trashObject);
