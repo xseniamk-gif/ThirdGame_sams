@@ -2,6 +2,7 @@ package ru.samsung.gamestudio;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import ru.samsung.gamestudio.managers.AudioManager;
 import ru.samsung.gamestudio.screens.GameScreen;
 import ru.samsung.gamestudio.screens.MenuScreen;
+import ru.samsung.gamestudio.screens.ScinScreen;
 import ru.samsung.gamestudio.screens.SettingsScreen;
 
 import static ru.samsung.gamestudio.GameSettings.*;
@@ -33,6 +35,7 @@ public class MyGdxGame extends Game {
     public GameScreen gameScreen;
     public MenuScreen menuScreen;
     public SettingsScreen settingsScreen;
+    public ScinScreen scinScreen;
 
     float accumulator = 0;
 
@@ -54,6 +57,7 @@ public class MyGdxGame extends Game {
         gameScreen = new GameScreen(this);
         menuScreen = new MenuScreen(this);
         settingsScreen = new SettingsScreen(this);
+        scinScreen = new ScinScreen(this);
 
         setScreen(menuScreen);
     }

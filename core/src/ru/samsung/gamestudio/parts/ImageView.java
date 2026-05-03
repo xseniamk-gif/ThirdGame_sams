@@ -7,11 +7,11 @@ public class ImageView extends View {
 
     Texture texture;
 
-    public ImageView(float x, float y, String imagePath) {
+    public ImageView(float x, float y, String imagePath, int widgh, int heigh) {
         super(x, y);
         texture = new Texture(imagePath);
-        this.width = texture.getWidth() ;
-        this.height = texture.getHeight() ;
+        this.width = widgh;
+        this.height = heigh;
     }
 
     @Override

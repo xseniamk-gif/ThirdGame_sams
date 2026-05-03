@@ -6,6 +6,7 @@ import static ru.samsung.gamestudio.managers.MemoryManager.saveSoundSettings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import ru.samsung.gamestudio.GameResources;
@@ -31,6 +32,7 @@ public class SettingsScreen extends ScreenAdapter {
     TextView musicSettingView;
     TextView soundSettingView;
     TextView clearSettingView;
+    Texture texture;
 
 
     public SettingsScreen(MyGdxGame myGdxGame) {
@@ -38,7 +40,8 @@ public class SettingsScreen extends ScreenAdapter {
 
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
         titleTextView = new TextView(myGdxGame.largeWhiteFont, 256, 956, "Settings");
-        blackoutImageView = new ImageView(85, 365, GameResources.BLACKOUT_MIDDLE_IMG_PATH);
+        texture = new Texture(GameResources.BLACKOUT_MIDDLE_IMG_PATH);
+        blackoutImageView = new ImageView(85, 365, GameResources.BLACKOUT_MIDDLE_IMG_PATH, texture.getWidth(), texture.getHeight());
         clearSettingView = new TextView(myGdxGame.commonWhiteFont, 173, 599, "clear records");
 
         musicSettingView = new TextView(

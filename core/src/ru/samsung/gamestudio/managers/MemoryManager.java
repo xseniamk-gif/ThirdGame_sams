@@ -6,7 +6,10 @@ import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
 
+import ru.samsung.gamestudio.GameResources;
+
 public class MemoryManager {
+
 
     private static final Preferences preferences = Gdx.app.getPreferences("User saves");
 
@@ -44,6 +47,14 @@ public class MemoryManager {
         Json json = new Json();
         ArrayList<Integer> table = json.fromJson(ArrayList.class, scores);
         return table;
+    }
+    public static void saveSelectedSkin(String skinPath) {
+        preferences.putString("selectedSkin", skinPath);
+        preferences.flush();
+    }
+
+    public static String loadSelectedSkin() {
+        return preferences.getString("selectedSkin", GameResources.SHIP_IMG_PATH1);
     }
 
 }

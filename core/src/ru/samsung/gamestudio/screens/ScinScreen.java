@@ -1,16 +1,26 @@
 package ru.samsung.gamestudio.screens;
 
+import static ru.samsung.gamestudio.managers.MemoryManager.loadIsSoundOn;
+import static ru.samsung.gamestudio.managers.MemoryManager.saveSoundSettings;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.util.ArrayList;
+
 import ru.samsung.gamestudio.GameResources;
 import ru.samsung.gamestudio.MyGdxGame;
+import ru.samsung.gamestudio.managers.MemoryManager;
+import ru.samsung.gamestudio.managers.SkinManager;
 import ru.samsung.gamestudio.parts.ButtonView;
 import ru.samsung.gamestudio.parts.ImageView;
 import ru.samsung.gamestudio.parts.MovingBackgroundView;
+import ru.samsung.gamestudio.parts.TextView;
 
 public class ScinScreen extends ScreenAdapter {
 
@@ -22,35 +32,54 @@ public class ScinScreen extends ScreenAdapter {
     ButtonView sh2;
     ButtonView sh3;
     ButtonView buttonSettings;
-    ButtonView sh4, bu;
+    ButtonView sh4;
     ImageView ship1, ship2, ship3, ship4;
-
+    SkinManager skinManager;
     int gamePoints;
-    public String color = "blue";
+    TextView selectedTextView;
+    public String ship = GameResources.SHIP_IMG_PATH1;
+    Texture texture;
 
     public ScinScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
 
-        sh1 = new ButtonView(50, 200, 100, 40);
-        sh2 = new ButtonView(500, 200, 100, 40);
-        sh3 = new ButtonView(50, 400, 100, 40);
-        sh4 = new ButtonView(500, 400, 100, 40);
-        buttonSettings = new ButtonView(860, 300, 100, 40);
-        background = new ButtonView("textures/background_top.png");
-        ship1 = new ImageView(30, 30, GameResources.SHIP_IMG_PATH1);
-        ship2 = new ImageView(30, 40, GameResources.SHIP_IMG_PATH2);
-        ship3 = new ImageView(30, 50, GameResources.SHIP_IMG_PATH3);
-        ship4 = new ImageView(30, 60, GameResources.SHIP_IMG_PATH4);
 
+        background = new MovingBackgroundView(GameResources.BLACKOUT_MIDDLE_IMG_PATH);
+
+        // Кнопки выбора скинов с правильными позициями
+        sh1 = new ButtonView(100, 1100, 200, 60, myGdxGame.commonBlackFont,
+                GameResources.BUTTON_SHORT_BG_IMG_PATH, "Ship 1");
+        sh2 = new ButtonView(100, 900, 200, 60, myGdxGame.commonBlackFont,
+                GameResources.BUTTON_SHORT_BG_IMG_PATH, "Ship 2");
+        sh3 = new ButtonView(100, 700, 200, 60, myGdxGame.commonBlackFont,
+                GameResources.BUTTON_SHORT_BG_IMG_PATH, "Ship 3");
+        sh4 = new ButtonView(100, 500, 200, 60, myGdxGame.commonBlackFont,
+                GameResources.BUTTON_SHORT_BG_IMG_PATH, "Ship 4");
+        selectedTextView = new TextView(myGdxGame.commonWhiteFont, 100, 450,
+                "Selected: " + getSkinName(SkinManager.selectedSkin));
+
+
+        buttonSettings = new ButtonView(280, 350, 160, 70, myGdxGame.commonBlackFont,
+                GameResources.BUTTON_SHORT_BG_IMG_PATH, "Back");
+
+
+        ship1 = new ImageView(350, 1100, GameResources.SHIP_IMG_PATH1, 100, 100);
+        ship2 = new ImageView(350, 900, GameResources.SHIP_IMG_PATH2, 100, 100);
+        ship3 = new ImageView(350, 700, GameResources.SHIP_IMG_PATH3, 100, 100);
+        ship4 = new ImageView(350, 500, GameResources.SHIP_IMG_PATH4, 100, 100);}
+
+    private String getSkinName(String path) {
+        if (path.equals(GameResources.SHIP_IMG_PATH1)) return "Ship 1";
+        if (path.equals(GameResources.SHIP_IMG_PATH2)) return "Ship 2";
+        if (path.equals(GameResources.SHIP_IMG_PATH3)) return "Ship 3";
+        if (path.equals(GameResources.SHIP_IMG_PATH4)) return "Ship 4";
+        return "Unknown";
     }
 
-    @Override
-    public void show() {
 
-    }
 
-    @Override
-    public void render(float delta) {
+
+    void handleInput() {
 
         if (Gdx.input.justTouched()) {
 
@@ -59,61 +88,66 @@ public class ScinScreen extends ScreenAdapter {
             );
 
             if (sh1.isHit((int) touch.x, (int) touch.y)) {
-                color = "red";
+                skinManager.selectedSkin = GameResources.SHIP_IMG_PATH1;
+                MemoryManager.saveSelectedSkin(GameResources.SHIP_IMG_PATH1);  // сохраняем
+                selectedTextView.setText("Selected: Ship 1");
             }
             if (sh2.isHit((int) touch.x, (int) touch.y)) {
-                color = "green";
+                skinManager.selectedSkin = GameResources.SHIP_IMG_PATH2;
+                MemoryManager.saveSelectedSkin(GameResources.SHIP_IMG_PATH3);
+                selectedTextView.setText("Selected: Ship 2");
             }
             if (sh3.isHit((int) touch.x, (int) touch.y)) {
-                color = "yellow";
+                skinManager.selectedSkin = GameResources.SHIP_IMG_PATH3;
+                MemoryManager.saveSelectedSkin(GameResources.SHIP_IMG_PATH3);
+                selectedTextView.setText("Selected: Ship 3");
             }
-            if (buttonBlue.isHit((int) touch.x, (int) touch.y)) {
-                color = "blue";
-
+            if (sh4.isHit((int) touch.x, (int) touch.y)) {
+                skinManager.selectedSkin = GameResources.SHIP_IMG_PATH4;
+                MemoryManager.saveSelectedSkin(GameResources.SHIP_IMG_PATH4);
+                selectedTextView.setText("Selected: Ship 4");
             }
-            if (buttonMenu.isHit((int) touch.x, (int) touch.y)) {
-                myGdxGame.setScreen(myGdxGame.screenMenu);
+            if (buttonSettings.isHit((int) touch.x, (int) touch.y)) {
+                myGdxGame.setScreen(myGdxGame.settingsScreen);
             }
         }
+    }
+    @Override
+    public void render(float delta) {
 
-        ScreenUtils.clear(1, 0, 0, 1);
+        handleInput();
+
         myGdxGame.camera.update();
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+        ScreenUtils.clear(Color.CLEAR);
+
         myGdxGame.batch.begin();
 
+
         background.draw(myGdxGame.batch);
-        buttonBlue.draw(myGdxGame.batch);
-        buttonRed.draw(myGdxGame.batch);
-        buttonYellow.draw(myGdxGame.batch);
-        buttonGreen.draw(myGdxGame.batch);
-        buttonMenu.draw(myGdxGame.batch);
+        sh1.draw(myGdxGame.batch);
+        sh2.draw(myGdxGame.batch);
+        sh3.draw(myGdxGame.batch);
+        sh4.draw(myGdxGame.batch);
+        buttonSettings.draw(myGdxGame.batch);
+        ship1.draw(myGdxGame.batch);
+        ship2.draw(myGdxGame.batch);
+        ship3.draw(myGdxGame.batch);
+        ship4.draw(myGdxGame.batch);
+        selectedTextView.draw(myGdxGame.batch);
 
         myGdxGame.batch.end();
     }
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
 
     @Override
     public void dispose() {
         background.dispose();
+        ship1.dispose();
+        ship2.dispose();
+        ship3.dispose();
+        ship4.dispose();
+        selectedTextView.dispose();
 
     }
 }

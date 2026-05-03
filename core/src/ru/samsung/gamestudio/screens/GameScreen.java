@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+
 import ru.samsung.gamestudio.*;
+import ru.samsung.gamestudio.managers.SkinManager;
 import ru.samsung.gamestudio.parts.*;
 import ru.samsung.gamestudio.managers.ContactManager;
 import ru.samsung.gamestudio.managers.MemoryManager;
@@ -40,12 +42,15 @@ public class GameScreen extends ScreenAdapter {
     TextView pauseTextView;
     ButtonView homeButton;
     ButtonView continueButton;
+    ScinScreen scinScreen;
+    SkinManager scinManager;
 
     // ENDED state UI
     TextView recordsTextView;
     RecordsListView recordsListView;
     ButtonView homeButton2;
     Random r = new Random();
+    Texture texture;
 
     public GameScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
@@ -59,12 +64,15 @@ public class GameScreen extends ScreenAdapter {
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, 150,
                 GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
-                GameResources.SHIP_IMG_PATH,
+                scinManager.selectedSkin,
                 myGdxGame.world
         );
 
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
-        topBlackoutView = new ImageView(0, 1180, GameResources.BLACKOUT_TOP_IMG_PATH);
+        texture = new Texture(GameResources.BLACKOUT_TOP_IMG_PATH);
+        int width = texture.getWidth();
+        int height = texture.getHeight();
+        topBlackoutView = new ImageView(0, 1180, GameResources.BLACKOUT_TOP_IMG_PATH, width, height);
         liveView = new LiveView(305, 1215);
         scoreTextView = new TextView(myGdxGame.commonWhiteFont, 50, 1215);
         pauseButton = new ButtonView(
@@ -72,10 +80,10 @@ public class GameScreen extends ScreenAdapter {
                 46, 54,
                 myGdxGame.commonWhiteFont,
                 GameResources.PAUSE_IMG_PATH,
-                "pause"
+                ""
         );
-
-        fullBlackoutView = new ImageView(0, 0, GameResources.BLACKOUT_FULL_IMG_PATH);
+        texture = new Texture(GameResources.BLACKOUT_FULL_IMG_PATH);
+        fullBlackoutView = new ImageView(0, 0, GameResources.BLACKOUT_FULL_IMG_PATH, texture.getWidth(), texture.getHeight());
         pauseTextView = new TextView(myGdxGame.largeWhiteFont, 282, 842, "Pause");
         homeButton = new ButtonView(
                 138, 695,
@@ -118,8 +126,8 @@ public class GameScreen extends ScreenAdapter {
 
             if (gameSession.shouldSpawnTrash()) {
 
-                int number = r.nextInt(1, 4);
-                String s = GameResources.TRASH_IMG_PATH + String.valueOf(number);
+                int number = r.nextInt(3);
+                String s = GameResources.TRASH_IMG_PATH + String.valueOf(number) + ".png";
                 TrashObject trashObject = new TrashObject(
                         GameSettings.TRASH_WIDTH, GameSettings.TRASH_HEIGHT,
                         s,
@@ -228,7 +236,8 @@ public class GameScreen extends ScreenAdapter {
 
             if (!trashArray.get(i).isAlive()) {
                 gameSession.destructionRegistration();
-                if (myGdxGame.audioManager.isSoundOn) myGdxGame.audioManager.explosionSound.play(0.2f);
+                if (myGdxGame.audioManager.isSoundOn)
+                    myGdxGame.audioManager.explosionSound.play(0.2f);
             }
 
             if (hasToBeDestroyed) {
@@ -261,7 +270,7 @@ public class GameScreen extends ScreenAdapter {
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, 150,
                 GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
-                GameResources.SHIP_IMG_PATH,
+                scinManager.selectedSkin,
                 myGdxGame.world
 
         );
